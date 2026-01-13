@@ -1,282 +1,293 @@
-<html lang="en"><head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Common Thread II</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&amp;display=swap" rel="stylesheet">
-    <style>
-        body { font-family: 'Inter', sans-serif; cursor: none; }
-        
-        .liquid-blob {
-            pointer-events: none;
-            position: fixed;
-            border-radius: 50%;
-            mix-blend-mode: screen;
-            filter: blur(1px);
-            z-index: 5;
-            transition: transform 0.1s ease-out;
-        }
-        
-        .cursor-dot {
-            pointer-events: none;
-            position: fixed;
-            width: 10px;
-            height: 10px;
-            border-radius: 50%;
-            background: #E8793B;
-            transform: translate(-50%, -50%);
-            z-index: 100;
-            box-shadow: 0 0 20px rgba(232, 121, 59, 0.8), 0 0 40px rgba(232, 121, 59, 0.4);
-        }
-        
-        .goo-filter {
-            position: absolute;
-            visibility: hidden;
-        }
-        
-        .blob-container {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 5;
-            filter: url(#goo);
-        }
-        
-        .trail-dot {
-            position: absolute;
-            border-radius: 50%;
-            background: radial-gradient(circle, rgba(232, 121, 59, 0.6) 0%, rgba(232, 121, 59, 0.2) 50%, transparent 70%);
-            pointer-events: none;
-            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-        
-        .ripple {
-            position: fixed;
-            border-radius: 50%;
-            background: radial-gradient(circle, rgba(232, 121, 59, 0.4) 0%, rgba(232, 121, 59, 0.1) 40%, transparent 70%);
-            pointer-events: none;
-            animation: liquid-ripple 1.2s ease-out forwards;
-            z-index: 4;
-        }
-        
-        @keyframes liquid-ripple {
-            0% {
-                width: 0;
-                height: 0;
-                opacity: 1;
-                transform: translate(-50%, -50%) scale(1);
-            }
-            50% {
-                opacity: 0.8;
-                transform: translate(-50%, -50%) scale(1.1);
-            }
-            100% {
-                width: 250px;
-                height: 250px;
-                opacity: 0;
-                transform: translate(-50%, -50%) scale(1);
-            }
-        }
-        
-        @keyframes blob-morph {
-            0%, 100% { border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; }
-            25% { border-radius: 30% 60% 70% 40% / 50% 60% 30% 60%; }
-            50% { border-radius: 50% 60% 30% 60% / 30% 60% 70% 40%; }
-            75% { border-radius: 60% 40% 60% 30% / 70% 30% 50% 60%; }
-        }
-        
-        .morphing-blob {
-            animation: blob-morph 8s ease-in-out infinite;
-        }
-    </style>
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Common Thread II</title>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
+
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+    @media (hover: hover) and (pointer: fine) {
+      body { cursor: none; }
+    }
+
+    .liquid-blob {
+      pointer-events: none;
+      position: fixed;
+      border-radius: 50%;
+      mix-blend-mode: screen;
+      filter: blur(1px);
+      z-index: 5;
+      transition: transform 0.1s ease-out;
+    }
+
+    .cursor-dot {
+      pointer-events: none;
+      position: fixed;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: #E8793B;
+      transform: translate(-50%, -50%);
+      z-index: 100;
+      box-shadow: 0 0 20px rgba(232, 121, 59, 0.8), 0 0 40px rgba(232, 121, 59, 0.4);
+    }
+
+    .goo-filter { position: absolute; visibility: hidden; }
+
+    .blob-container {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      pointer-events: none;
+      z-index: 5;
+      filter: url(#goo);
+    }
+
+    .trail-dot {
+      position: absolute;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(232, 121, 59, 0.6) 0%, rgba(232, 121, 59, 0.2) 50%, transparent 70%);
+      pointer-events: none;
+      transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+
+    .ripple {
+      position: fixed;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(232, 121, 59, 0.4) 0%, rgba(232, 121, 59, 0.1) 40%, transparent 70%);
+      pointer-events: none;
+      animation: liquid-ripple 1.2s ease-out forwards;
+      z-index: 4;
+    }
+
+    @keyframes liquid-ripple {
+      0% { width: 0; height: 0; opacity: 1; transform: translate(-50%, -50%) scale(1); }
+      50% { opacity: 0.8; transform: translate(-50%, -50%) scale(1.1); }
+      100% { width: 250px; height: 250px; opacity: 0; transform: translate(-50%, -50%) scale(1); }
+    }
+
+    @keyframes blob-morph {
+      0%, 100% { border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; }
+      25% { border-radius: 30% 60% 70% 40% / 50% 60% 30% 60%; }
+      50% { border-radius: 50% 60% 30% 60% / 30% 60% 70% 40%; }
+      75% { border-radius: 60% 40% 60% 30% / 70% 30% 50% 60%; }
+    }
+
+    .morphing-blob { animation: blob-morph 8s ease-in-out infinite; }
+
+    /* Contact link always visible (mobile-safe) */
+    .contact-link {
+      position: fixed;
+      left: 2rem;   /* matches left-8 */
+      bottom: 2rem; /* matches bottom-8 */
+      z-index: 9999;
+    }
+    @media (min-width: 640px) { .contact-link { left: 3rem; bottom: 3rem; } }   /* sm */
+    @media (min-width: 768px) { .contact-link { left: 4rem; } }                /* md */
+    @media (min-width: 1024px) { .contact-link { left: 6rem; } }               /* lg */
+    @media (min-width: 1280px) { .contact-link { left: 8rem; } }               /* xl */
+  </style>
 </head>
+
 <body class="bg-neutral-900 min-h-screen overflow-hidden">
-    <!-- SVG Filter for Goo Effect -->
-    <svg class="goo-filter">
-        <defs>
-            <filter id="goo">
-                <feGaussianBlur in="SourceGraphic" stdDeviation="10" result="blur"></feGaussianBlur>
-                <feColorMatrix in="blur" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 20 -10" result="goo"></feColorMatrix>
-                <feComposite in="SourceGraphic" in2="goo" operator="atop"></feComposite>
-            </filter>
-        </defs>
-    </svg>
+  <!-- SVG Filter for Goo Effect -->
+  <svg class="goo-filter">
+    <defs>
+      <filter id="goo">
+        <feGaussianBlur in="SourceGraphic" stdDeviation="10" result="blur"></feGaussianBlur>
+        <feColorMatrix in="blur" mode="matrix"
+          values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 20 -10"
+          result="goo"></feColorMatrix>
+        <feComposite in="SourceGraphic" in2="goo" operator="atop"></feComposite>
+      </filter>
+    </defs>
+  </svg>
 
-    <!-- Blob Container with Goo Filter -->
-    <div class="blob-container" id="blobContainer"></div>
+  <!-- Blob Container with Goo Filter -->
+  <div class="blob-container" id="blobContainer"></div>
 
-    <!-- Cursor Dot -->
-    <div class="cursor-dot" id="cursorDot" style="opacity: 0;"></div>
+  <!-- Cursor Dot -->
+  <div class="cursor-dot" id="cursorDot" style="opacity: 0;"></div>
 
-    <!-- SVG Background Pattern -->
-    <svg class="absolute inset-0 w-full h-full" viewBox="0 0 1440 900" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
-        <ellipse cx="1200" cy="900" rx="400" ry="400" stroke="rgba(255,255,255,0.08)" stroke-width="1" fill="none"></ellipse>
-        <ellipse cx="1200" cy="900" rx="550" ry="550" stroke="rgba(255,255,255,0.08)" stroke-width="1" fill="none"></ellipse>
-        <ellipse cx="1200" cy="900" rx="700" ry="700" stroke="rgba(255,255,255,0.08)" stroke-width="1" fill="none"></ellipse>
-        <ellipse cx="1200" cy="900" rx="850" ry="850" stroke="rgba(255,255,255,0.08)" stroke-width="1" fill="none"></ellipse>
-        <ellipse cx="1200" cy="900" rx="1000" ry="1000" stroke="rgba(255,255,255,0.08)" stroke-width="1" fill="none"></ellipse>
-        <ellipse cx="1200" cy="900" rx="1150" ry="1150" stroke="rgba(255,255,255,0.08)" stroke-width="1" fill="none"></ellipse>
-        <line x1="800" y1="0" x2="1400" y2="900" stroke="rgba(255,255,255,0.1)" stroke-width="1"></line>
-        <circle cx="1050" cy="180" r="4" fill="white"></circle>
-        <circle cx="1180" cy="320" r="4" fill="white"></circle>
-        <circle cx="1320" cy="680" r="4" fill="white"></circle>
-    </svg>
+  <!-- SVG Background Pattern -->
+  <svg class="absolute inset-0 w-full h-full" viewBox="0 0 1440 900" fill="none"
+       xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
+    <ellipse cx="1200" cy="900" rx="400" ry="400" stroke="rgba(255,255,255,0.08)" stroke-width="1" fill="none"></ellipse>
+    <ellipse cx="1200" cy="900" rx="550" ry="550" stroke="rgba(255,255,255,0.08)" stroke-width="1" fill="none"></ellipse>
+    <ellipse cx="1200" cy="900" rx="700" ry="700" stroke="rgba(255,255,255,0.08)" stroke-width="1" fill="none"></ellipse>
+    <ellipse cx="1200" cy="900" rx="850" ry="850" stroke="rgba(255,255,255,0.08)" stroke-width="1" fill="none"></ellipse>
+    <ellipse cx="1200" cy="900" rx="1000" ry="1000" stroke="rgba(255,255,255,0.08)" stroke-width="1" fill="none"></ellipse>
+    <ellipse cx="1200" cy="900" rx="1150" ry="1150" stroke="rgba(255,255,255,0.08)" stroke-width="1" fill="none"></ellipse>
+    <line x1="800" y1="0" x2="1400" y2="900" stroke="rgba(255,255,255,0.1)" stroke-width="1"></line>
+    <circle cx="1050" cy="180" r="4" fill="white"></circle>
+    <circle cx="1180" cy="320" r="4" fill="white"></circle>
+    <circle cx="1320" cy="680" r="4" fill="white"></circle>
+  </svg>
 
-    <!-- Main Content -->
-    <main class="min-h-screen flex flex-col sm:px-12 md:px-16 lg:px-24 xl:px-32 z-10 pr-8 pl-8 relative justify-center">
-        <div class="max-w-4xl">
-            <h1 class="sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl leading-none md:mb-12 text-4xl font-light text-white tracking-tight mb-8">
-                Common Thread II
-            </h1>
-            <p class="text-base sm:text-lg md:text-xl font-light text-neutral-400 max-w-xl leading-relaxed">
-                A fund of funds for the structural transitions<br class="hidden sm:block"> reshaping the modern economy.
-            </p>
-        </div>
-        <div class="absolute bottom-8 sm:bottom-12 left-8 sm:left-12 md:left-16 lg:left-24 xl:left-32">
-            <a href="mailto:info@commonthread.capital" class="text-sm text-neutral-500 hover:text-white transition-colors duration-300 font-normal tracking-wide">
-                Contact
-            </a>
-        </div>
-    </main>
+  <!-- Main Content -->
+  <main class="min-h-screen flex flex-col sm:px-12 md:px-16 lg:px-24 xl:px-32 z-10 pr-8 pl-8 relative justify-center">
+    <div class="max-w-4xl">
+      <h1 class="sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl leading-none md:mb-12 text-4xl font-light text-white tracking-tight mb-8">
+        Common Thread II
+      </h1>
+      <p class="text-base sm:text-lg md:text-xl font-light text-neutral-400 max-w-xl leading-relaxed">
+        A fund of funds for the structural transitions<br class="hidden sm:block" />
+        reshaping the modern economy.
+      </p>
+    </div>
+  </main>
 
-    <script>
-        const cursorDot = document.getElementById('cursorDot');
-        const blobContainer = document.getElementById('blobContainer');
-        
-        let mouseX = 0, mouseY = 0;
-        let isMouseInWindow = false;
-        
-        // Trail system
-        const trailLength = 12;
-        const trailDots = [];
-        const trailPositions = [];
-        
-        // Initialize trail dots
+  <!-- Contact (fixed, always visible) -->
+  <div class="contact-link">
+    <a href="mailto:info@commonthread.capital"
+       class="text-sm text-neutral-500 hover:text-white transition-colors duration-300 font-normal tracking-wide">
+      Contact
+    </a>
+  </div>
+
+  <script>
+    const cursorDot = document.getElementById('cursorDot');
+    const blobContainer = document.getElementById('blobContainer');
+
+    let mouseX = 0, mouseY = 0;
+
+    // Trail system
+    const trailLength = 12;
+    const trailDots = [];
+    const trailPositions = [];
+
+    // Initialize trail dots
+    for (let i = 0; i < trailLength; i++) {
+      const dot = document.createElement('div');
+      dot.className = 'trail-dot morphing-blob';
+      const size = 60 - (i * 4);
+      dot.style.width = size + 'px';
+      dot.style.height = size + 'px';
+      dot.style.opacity = (0.5 - (i * 0.035)).toString();
+      dot.style.background = `radial-gradient(circle, rgba(232, 121, 59, ${0.4 - i * 0.025}) 0%, rgba(232, 121, 59, ${0.15 - i * 0.01}) 50%, transparent 70%)`;
+      blobContainer.appendChild(dot);
+      trailDots.push(dot);
+      trailPositions.push({ x: 0, y: 0 });
+    }
+
+    // Only run cursor effects on devices with a real mouse/trackpad
+    const allowPointerFX = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+
+    if (allowPointerFX) {
+      document.addEventListener('mousemove', (e) => {
+        mouseX = e.clientX;
+        mouseY = e.clientY;
+
+        cursorDot.style.left = mouseX + 'px';
+        cursorDot.style.top = mouseY + 'px';
+      });
+
+      function animateTrail() {
         for (let i = 0; i < trailLength; i++) {
-            const dot = document.createElement('div');
-            dot.className = 'trail-dot morphing-blob';
-            const size = 60 - (i * 4);
-            const opacity = 0.5 - (i * 0.035);
-            dot.style.width = size + 'px';
-            dot.style.height = size + 'px';
-            dot.style.opacity = opacity;
-            dot.style.background = `radial-gradient(circle, rgba(232, 121, 59, ${0.4 - i * 0.025}) 0%, rgba(232, 121, 59, ${0.15 - i * 0.01}) 50%, transparent 70%)`;
-            blobContainer.appendChild(dot);
-            trailDots.push(dot);
-            trailPositions.push({ x: 0, y: 0 });
+          const targetX = i === 0 ? mouseX : trailPositions[i - 1].x;
+          const targetY = i === 0 ? mouseY : trailPositions[i - 1].y;
+
+          const ease = 0.15 - (i * 0.008);
+          trailPositions[i].x += (targetX - trailPositions[i].x) * ease;
+          trailPositions[i].y += (targetY - trailPositions[i].y) * ease;
+
+          const dx = targetX - trailPositions[i].x;
+          const dy = targetY - trailPositions[i].y;
+          const velocity = Math.sqrt(dx * dx + dy * dy);
+          const angle = Math.atan2(dy, dx) * 180 / Math.PI;
+          const stretch = Math.min(velocity * 0.02, 0.5);
+
+          trailDots[i].style.left = (trailPositions[i].x - trailDots[i].offsetWidth / 2) + 'px';
+          trailDots[i].style.top = (trailPositions[i].y - trailDots[i].offsetHeight / 2) + 'px';
+          trailDots[i].style.transform = `rotate(${angle}deg) scaleX(${1 + stretch}) scaleY(${1 - stretch * 0.3})`;
         }
-        
-        document.addEventListener('mousemove', (e) => {
-            mouseX = e.clientX;
-            mouseY = e.clientY;
-            
-            cursorDot.style.left = mouseX + 'px';
-            cursorDot.style.top = mouseY + 'px';
-        });
-        
-        function animateTrail() {
-            // Update positions with liquid-like easing
-            for (let i = 0; i < trailLength; i++) {
-                const targetX = i === 0 ? mouseX : trailPositions[i - 1].x;
-                const targetY = i === 0 ? mouseY : trailPositions[i - 1].y;
-                
-                const ease = 0.15 - (i * 0.008);
-                trailPositions[i].x += (targetX - trailPositions[i].x) * ease;
-                trailPositions[i].y += (targetY - trailPositions[i].y) * ease;
-                
-                // Calculate stretch based on velocity
-                const dx = targetX - trailPositions[i].x;
-                const dy = targetY - trailPositions[i].y;
-                const velocity = Math.sqrt(dx * dx + dy * dy);
-                const angle = Math.atan2(dy, dx) * 180 / Math.PI;
-                const stretch = Math.min(velocity * 0.02, 0.5);
-                
-                trailDots[i].style.left = (trailPositions[i].x - trailDots[i].offsetWidth / 2) + 'px';
-                trailDots[i].style.top = (trailPositions[i].y - trailDots[i].offsetHeight / 2) + 'px';
-                trailDots[i].style.transform = `rotate(${angle}deg) scaleX(${1 + stretch}) scaleY(${1 - stretch * 0.3})`;
-            }
-            
-            requestAnimationFrame(animateTrail);
+
+        requestAnimationFrame(animateTrail);
+      }
+      animateTrail();
+
+      document.addEventListener('click', (e) => {
+        createLiquidRipple(e.clientX, e.clientY);
+        createSplash(e.clientX, e.clientY);
+      });
+
+      function createLiquidRipple(x, y) {
+        const ripple = document.createElement('div');
+        ripple.className = 'ripple morphing-blob';
+        ripple.style.left = x + 'px';
+        ripple.style.top = y + 'px';
+        document.body.appendChild(ripple);
+        setTimeout(() => ripple.remove(), 1200);
+      }
+
+      function createSplash(x, y) {
+        const splashCount = 6;
+        for (let i = 0; i < splashCount; i++) {
+          const splash = document.createElement('div');
+          splash.className = 'trail-dot';
+          const size = 15 + Math.random() * 20;
+          splash.style.width = size + 'px';
+          splash.style.height = size + 'px';
+          splash.style.left = x + 'px';
+          splash.style.top = y + 'px';
+          splash.style.background = `radial-gradient(circle, rgba(232, 121, 59, 0.6) 0%, rgba(232, 121, 59, 0.2) 50%, transparent 70%)`;
+          splash.style.transition = 'all 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
+          splash.style.transform = 'translate(-50%, -50%)';
+          document.body.appendChild(splash);
+
+          const angle = (i / splashCount) * Math.PI * 2;
+          const distance = 50 + Math.random() * 60;
+          const targetX = x + Math.cos(angle) * distance;
+          const targetY = y + Math.sin(angle) * distance;
+
+          setTimeout(() => {
+            splash.style.left = targetX + 'px';
+            splash.style.top = targetY + 'px';
+            splash.style.opacity = '0';
+            splash.style.transform = 'translate(-50%, -50%) scale(0.3)';
+          }, 10);
+
+          setTimeout(() => splash.remove(), 800);
         }
-        animateTrail();
-        
-        document.addEventListener('click', (e) => {
-            createLiquidRipple(e.clientX, e.clientY);
-            createSplash(e.clientX, e.clientY);
+      }
+
+      document.addEventListener('mouseleave', () => {
+        cursorDot.style.opacity = '0';
+        trailDots.forEach(dot => dot.style.opacity = '0');
+      });
+
+      document.addEventListener('mouseenter', () => {
+        cursorDot.style.opacity = '1';
+        trailDots.forEach((dot, i) => dot.style.opacity = (0.5 - (i * 0.035)).toString());
+      });
+
+      const interactiveElements = document.querySelectorAll('a, button');
+      interactiveElements.forEach(el => {
+        el.addEventListener('mouseenter', () => {
+          cursorDot.style.transform = 'translate(-50%, -50%) scale(2)';
+          cursorDot.style.background = 'transparent';
+          cursorDot.style.border = '2px solid #E8793B';
         });
-        
-        function createLiquidRipple(x, y) {
-            const ripple = document.createElement('div');
-            ripple.className = 'ripple morphing-blob';
-            ripple.style.left = x + 'px';
-            ripple.style.top = y + 'px';
-            document.body.appendChild(ripple);
-            
-            setTimeout(() => ripple.remove(), 1200);
-        }
-        
-        function createSplash(x, y) {
-            const splashCount = 6;
-            for (let i = 0; i < splashCount; i++) {
-                const splash = document.createElement('div');
-                splash.className = 'trail-dot';
-                const size = 15 + Math.random() * 20;
-                splash.style.width = size + 'px';
-                splash.style.height = size + 'px';
-                splash.style.left = x + 'px';
-                splash.style.top = y + 'px';
-                splash.style.background = `radial-gradient(circle, rgba(232, 121, 59, 0.6) 0%, rgba(232, 121, 59, 0.2) 50%, transparent 70%)`;
-                splash.style.transition = 'all 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
-                splash.style.transform = 'translate(-50%, -50%)';
-                document.body.appendChild(splash);
-                
-                const angle = (i / splashCount) * Math.PI * 2;
-                const distance = 50 + Math.random() * 60;
-                const targetX = x + Math.cos(angle) * distance;
-                const targetY = y + Math.sin(angle) * distance;
-                
-                setTimeout(() => {
-                    splash.style.left = targetX + 'px';
-                    splash.style.top = targetY + 'px';
-                    splash.style.opacity = '0';
-                    splash.style.transform = 'translate(-50%, -50%) scale(0.3)';
-                }, 10);
-                
-                setTimeout(() => splash.remove(), 800);
-            }
-        }
-        
-        document.addEventListener('mouseleave', () => {
-            isMouseInWindow = false;
-            cursorDot.style.opacity = '0';
-            trailDots.forEach(dot => dot.style.opacity = '0');
+        el.addEventListener('mouseleave', () => {
+          cursorDot.style.transform = 'translate(-50%, -50%) scale(1)';
+          cursorDot.style.background = '#E8793B';
+          cursorDot.style.border = 'none';
         });
-        
-        document.addEventListener('mouseenter', () => {
-            isMouseInWindow = true;
-            cursorDot.style.opacity = '1';
-            trailDots.forEach((dot, i) => {
-                dot.style.opacity = 0.5 - (i * 0.035);
-            });
-        });
-        
-        const interactiveElements = document.querySelectorAll('a, button');
-        interactiveElements.forEach(el => {
-            el.addEventListener('mouseenter', () => {
-                cursorDot.style.transform = 'translate(-50%, -50%) scale(2)';
-                cursorDot.style.background = 'transparent';
-                cursorDot.style.border = '2px solid #E8793B';
-            });
-            el.addEventListener('mouseleave', () => {
-                cursorDot.style.transform = 'translate(-50%, -50%) scale(1)';
-                cursorDot.style.background = '#E8793B';
-                cursorDot.style.border = 'none';
-            });
-        });
-    </script>
-</body></html>
+      });
+    } else {
+      // On mobile/touch devices: disable cursor + blobs to avoid weird overlays
+      cursorDot.style.display = 'none';
+      blobContainer.style.display = 'none';
+    }
+  </script>
+</body>
+</html>
+```
