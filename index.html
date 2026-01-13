@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Common Thread II</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    :root {
+      --bg: #0b0b0c;
+      --text: #f2f2f2;
+      --muted: #b5b5b5;
+      --accent: #ff6a2b;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Inter, Helvetica, Arial, sans-serif;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .container {
+      text-align: center;
+      max-width: 900px;
+      padding: 0 24px;
+    }
+
+    h1 {
+      font-size: clamp(42px, 6vw, 72px);
+      font-weight: 500;
+      letter-spacing: -0.02em;
+      margin: 0 0 16px 0;
+    }
+
+    p {
+      font-size: clamp(16px, 2vw, 20px);
+      line-height: 1.5;
+      color: var(--muted);
+      margin: 0 0 40px 0;
+    }
+
+    a {
+      font-size: 14px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--accent);
+      text-decoration: none;
+      position: relative;
+    }
+
+    a::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: -4px;
+      width: 100%;
+      height: 1px;
+      background: var(--accent);
+      opacity: 0.4;
+    }
+
+    /* subtle background thread effect */
+    .background-thread {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background: radial-gradient(
+        circle at 20% 30%,
+        rgba(255, 106, 43, 0.08),
+        transparent 40%
+      ),
+      radial-gradient(
+        circle at 80% 70%,
+        rgba(255, 106, 43, 0.05),
+        transparent 40%
+      );
+    }
+  </style>
+</head>
+<body>
+  <div class="background-thread"></div>
+
+  <div class="container">
+    <h1>Common Thread II</h1>
+    <p>A fund of funds for the structural transitions reshaping the modern economy.</p>
+    <a href="mailto:contact@commonthread.com">Contact</a>
+  </div>
+</body>
+</html>
